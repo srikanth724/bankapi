@@ -8,7 +8,7 @@ Today, your task is to build a basic HTTP REST API and/or event driven async ser
 ### Tasks
 - Implement assignment using:
   - Language: **Java 8+**
-  - Framework: **Spring** or **Apache camel**
+  - Framework: **Spring Boot**
 - There should be API routes that allow them to:
   - Create a new bank account for a customer, with an initial deposit amount. A
     single customer may have multiple bank accounts.
