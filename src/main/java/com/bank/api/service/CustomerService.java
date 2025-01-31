@@ -3,6 +3,8 @@ package com.bank.api.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import com.bank.api.repository.CustomerRepository;
  */
 @Service
 public class CustomerService {
+
+	private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
 	/** The customer repository. */
 	@Autowired
@@ -34,6 +38,7 @@ public class CustomerService {
 	 * @return the list
 	 */
 	public List<Customer> fetchAllCustomers() {
+		logger.info("INFO: Fetching all customers");
 		return customerRepository.findAll();
 	}
 
@@ -57,6 +62,8 @@ public class CustomerService {
 	 */
 	public Customer createCustomerWithInitialBalance(Customer customerRequest) {
 
+		logger.info("Processing INFO: createCustomerWithInitialBalance" + customerRequest.toString());
+
 		// Validate if the customer exists based on emailAddress
 		Customer existingCustomer = customerRepository.findByEmailAddress(customerRequest.getEmailAddress());
 
@@ -73,6 +80,8 @@ public class CustomerService {
 		customerRepository.save(customer);
 
 		accountService.createAccountWithInitialBalance(customer.getId());
+
+		logger.info("Completed Processing INFO: createCustomerWithInitialBalance" + customer.toString());
 
 		return customer;
 	}
