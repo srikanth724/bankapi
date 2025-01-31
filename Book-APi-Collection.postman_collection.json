@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "8f7012f2-8e97-4e8e-9124-f8095b396da2",
+		"name": "Book-APi-Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7348956"
+	},
+	"item": [
+		{
+			"name": "CreateCustomer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"givenName\": \"Arisha\",\r\n    \"familyName\": \"Barron\",\r\n    \"emailAddress\": \"anishabarron@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customers/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Account by CustomerId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/all/679c9863946e9b35fcbb1594",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"all",
+						"679c9863946e9b35fcbb1594"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transactions by Account Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/account/679c997d946e9b35fcbb159a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"account",
+						"679c997d946e9b35fcbb159a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create second account for the same customer with initial balance",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/create/679c9863946e9b35fcbb1594",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"create",
+						"679c9863946e9b35fcbb1594"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer balance from Account \"679c9863946e9b35fcbb1595\" to \"679c997d946e9b35fcbb159a\"",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fromAccountId\": \"679c9863946e9b35fcbb1595\",\r\n    \"toAccountId\": \"679c997d946e9b35fcbb159a\",\r\n    \"transactionAmount\": 300\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer Event - Transer balance asynchronously from \"679c997d946e9b35fcbb159a\" to \"679c9863946e9b35fcbb1595\"",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fromAccountId\": \"679c997d946e9b35fcbb159a\",\r\n  \"toAccountId\": \"679c9863946e9b35fcbb1595\",\r\n  \"transactionAmount\": 300\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transfers/transferEvent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transfers",
+						"transferEvent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Periodically we can check the status of the Transfer Event",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/transfers/679c9c0d347c936791860e15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transfers",
+						"679c9c0d347c936791860e15"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

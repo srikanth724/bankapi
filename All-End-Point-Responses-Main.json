@@ -1,0 +1,478 @@
+#######################  Documentation of the flow ######################
+---------------------------------------------------------------------------
+
+--> Create endpoint to create customer account with initial balance 1000
+
+curl -X 'POST' \
+  'http://localhost:8080/api/customers/create' \
+  -H 'accept: application/hal+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "givenName": "Arisha",
+  "familyName": "Barron",
+  "emailAddress": "anishabarron@gmail.com"
+}'
+
+{
+  "id": "679c8bd0dc490729c7915e42",
+  "givenName": "Arisha",
+  "familyName": "Barron",
+  "emailAddress": "anishabarron@gmail.com",
+  "created": "2025-01-31T00:37:36.3670888",
+  "lastUpdated": "2025-01-31T00:37:36.3670888"
+}
+
+
+--------
+
+--> Get Account by CustomerId
+
+curl -X 'GET' \
+  'http://localhost:8080/api/accounts/all/679c8bd0dc490729c7915e42' \
+  -H 'accept: application/hal+json'
+
+[
+  {
+    "id": "679c8bd9dc490729c7915e43",
+    "accountBalance": 1000,
+    "dateDeposited": "2025-01-31T00:37:45.319",
+    "customer": {
+      "id": "679c8bd0dc490729c7915e42",
+      "givenName": "Arisha",
+      "familyName": "Barron",
+      "emailAddress": "anishabarron@gmail.com",
+      "created": "2025-01-31T00:37:36.367",
+      "lastUpdated": "2025-01-31T00:37:36.367"
+    },
+    "lastUpdated": "2025-01-31T00:37:45.319"
+  }
+]
+
+---------
+
+--> Get Transactions by Account Id
+
+curl -X 'GET' \
+  'http://localhost:8080/api/transactions/account/679c8bd9dc490729c7915e43' \
+  -H 'accept: application/hal+json'
+  
+  [
+  {
+    "id": "679c8bd9dc490729c7915e44",
+    "fromAccountId": null,
+    "toAccountId": null,
+    "transactionAmount": 1000,
+    "accountId": "679c8bd9dc490729c7915e43",
+    "transactionType": "INITIAL_DEPOSIT",
+    "created": "2025-01-31T00:37:45.319"
+  }
+]
+
+----------------
+
+--> Create second account for the same customer with intial balance
+
+curl -X 'POST' \
+  'http://localhost:8080/api/accounts/create/679c8bd0dc490729c7915e42' \
+  -H 'accept: application/hal+json' \
+  -d ''
+  
+  {
+  "id": "679c8d7bdc490729c7915e45",
+  "accountBalance": 1000,
+  "dateDeposited": "2025-01-31T00:44:43.2703226",
+  "customer": {
+    "id": "679c8bd0dc490729c7915e42",
+    "givenName": "Arisha",
+    "familyName": "Barron",
+    "emailAddress": "anishabarron@gmail.com",
+    "created": "2025-01-31T00:37:36.367",
+    "lastUpdated": "2025-01-31T00:37:36.367"
+  },
+  "lastUpdated": "2025-01-31T00:44:43.2703226"
+}
+
+
+--> Transactions for the second account
+
+curl -X 'GET' \
+  'http://localhost:8080/api/transactions/account/679c8d7bdc490729c7915e45' \
+  -H 'accept: application/hal+json'
+  
+  [
+  {
+    "id": "679c8d7bdc490729c7915e46",
+    "fromAccountId": null,
+    "toAccountId": null,
+    "transactionAmount": 1000,
+    "accountId": "679c8d7bdc490729c7915e45",
+    "transactionType": "INITIAL_DEPOSIT",
+    "created": "2025-01-31T00:44:43.27"
+  }
+]
+
+----------------------
+
+--> Create Second CustomerId
+
+curl -X 'POST' \
+  'http://localhost:8080/api/customers/create' \
+  -H 'accept: application/hal+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "givenName": "Branden",
+  "familyName": "Gibson",
+  "emailAddress": "brandengibson@gmail.com"
+}'
+
+{
+  "id": "679c8e60dc490729c7915e47",
+  "givenName": "Branden",
+  "familyName": "Gibson",
+  "emailAddress": "brandengibson@gmail.com",
+  "created": "2025-01-31T00:48:32.919492",
+  "lastUpdated": "2025-01-31T00:48:32.919492"
+}
+
+------------------------
+
+--> Get Account by CustomerId (2)
+
+curl -X 'GET' \
+  'http://localhost:8080/api/accounts/all/679c8e60dc490729c7915e47' \
+  -H 'accept: application/hal+json'
+  
+  [
+  {
+    "id": "679c8e60dc490729c7915e48",
+    "accountBalance": 1000,
+    "dateDeposited": "2025-01-31T00:48:32.928",
+    "customer": {
+      "id": "679c8e60dc490729c7915e47",
+      "givenName": "Branden",
+      "familyName": "Gibson",
+      "emailAddress": "brandengibson@gmail.com",
+      "created": "2025-01-31T00:48:32.919",
+      "lastUpdated": "2025-01-31T00:48:32.919"
+    },
+    "lastUpdated": "2025-01-31T00:48:32.928"
+  }
+]
+
+---------------------
+
+--> Get Transaction by Account Id
+
+curl -X 'GET' \
+  'http://localhost:8080/api/transactions/account/679c8e60dc490729c7915e48' \
+  -H 'accept: application/hal+json'
+  
+  [
+  {
+    "id": "679c8e60dc490729c7915e49",
+    "fromAccountId": null,
+    "toAccountId": null,
+    "transactionAmount": 1000,
+    "accountId": "679c8e60dc490729c7915e48",
+    "transactionType": "INITIAL_DEPOSIT",
+    "created": "2025-01-31T00:48:32.928"
+  }
+]
+
+----------------------------------
+
+--> Transer balance from "679c8bd9dc490729c7915e43" to "679c8e60dc490729c7915e48"
+
+
+curl -X 'GET' \
+  'http://localhost:8080/api/accounts/679c8bd9dc490729c7915e43' \
+  -H 'accept: application/hal+json'
+
+{
+  "id": "679c8bd9dc490729c7915e43",
+  "accountBalance": 1000,
+  "dateDeposited": "2025-01-31T00:37:45.319",
+  "customer": {
+    "id": "679c8bd0dc490729c7915e42",
+    "givenName": "Arisha",
+    "familyName": "Barron",
+    "emailAddress": "anishabarron@gmail.com",
+    "created": "2025-01-31T00:37:36.367",
+    "lastUpdated": "2025-01-31T00:37:36.367"
+  },
+  "lastUpdated": "2025-01-31T00:37:45.319"
+}
+  
+
+curl -X 'GET' \
+  'http://localhost:8080/api/accounts/679c8e60dc490729c7915e48' \
+  -H 'accept: application/hal+json'
+  
+  {
+  "id": "679c8e60dc490729c7915e48",
+  "accountBalance": 1000,
+  "dateDeposited": "2025-01-31T00:48:32.928",
+  "customer": {
+    "id": "679c8e60dc490729c7915e47",
+    "givenName": "Branden",
+    "familyName": "Gibson",
+    "emailAddress": "brandengibson@gmail.com",
+    "created": "2025-01-31T00:48:32.919",
+    "lastUpdated": "2025-01-31T00:48:32.919"
+  },
+  "lastUpdated": "2025-01-31T00:48:32.928"
+}
+
+
+---> Transfer Endpoint
+
+curl -X 'POST' \
+  'http://localhost:8080/api/transactions/transfer' \
+  -H 'accept: application/hal+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "transferId": "string",
+  "fromAccountId": "679c8bd9dc490729c7915e43",
+  "toAccountId": "679c8e60dc490729c7915e48",
+  "transactionAmount": 300
+}'
+
+  
+[
+  {
+    "id": "679c931dee725175a74c4cb7",
+    "fromAccountId": null,
+    "toAccountId": "679c8e60dc490729c7915e48",
+    "transactionAmount": 300,
+    "accountId": "679c8bd9dc490729c7915e43",
+    "transactionType": "TRANSFER_FROM",
+    "created": "2025-01-31T01:08:45.2325017"
+  },
+  {
+    "id": "679c931dee725175a74c4cb8",
+    "fromAccountId": "679c8bd9dc490729c7915e43",
+    "toAccountId": null,
+    "transactionAmount": 300,
+    "accountId": "679c8e60dc490729c7915e48",
+    "transactionType": "TRANSFER_TO",
+    "created": "2025-01-31T01:08:45.2325017"
+  }
+]
+
+---> Account balance of this account
+
+form account "679c8bd9dc490729c7915e43"
+
+curl -X 'GET' \
+  'http://localhost:8080/api/accounts/679c8bd9dc490729c7915e43' \
+  -H 'accept: application/hal+json'
+  
+  {
+  "id": "679c8bd9dc490729c7915e43",
+  "accountBalance": 700,
+  "dateDeposited": "2025-01-31T00:37:45.319",
+  "customer": {
+    "id": "679c8bd0dc490729c7915e42",
+    "givenName": "Arisha",
+    "familyName": "Barron",
+    "emailAddress": "anishabarron@gmail.com",
+    "created": "2025-01-31T00:37:36.367",
+    "lastUpdated": "2025-01-31T00:37:36.367"
+  },
+  "lastUpdated": "2025-01-31T01:08:45.232"
+}
+
+-- to Account 679c8e60dc490729c7915e48
+
+curl -X 'GET' \
+  'http://localhost:8080/api/accounts/679c8e60dc490729c7915e48' \
+  -H 'accept: application/hal+json'
+  
+  {
+  "id": "679c8e60dc490729c7915e48",
+  "accountBalance": 1300,
+  "dateDeposited": "2025-01-31T00:48:32.928",
+  "customer": {
+    "id": "679c8e60dc490729c7915e47",
+    "givenName": "Branden",
+    "familyName": "Gibson",
+    "emailAddress": "brandengibson@gmail.com",
+    "created": "2025-01-31T00:48:32.919",
+    "lastUpdated": "2025-01-31T00:48:32.919"
+  },
+  "lastUpdated": "2025-01-31T01:08:45.232"
+}
+
+--> All transactions by AccountId
+
+curl -X 'GET' \
+  'http://localhost:8080/api/transactions/account/679c8bd9dc490729c7915e43' \
+  -H 'accept: application/hal+json'
+  
+  [
+  {
+    "id": "679c8bd9dc490729c7915e44",
+    "fromAccountId": null,
+    "toAccountId": null,
+    "transactionAmount": 1000,
+    "accountId": "679c8bd9dc490729c7915e43",
+    "transactionType": "INITIAL_DEPOSIT",
+    "created": "2025-01-31T00:37:45.319"
+  },
+  {
+    "id": "679c931dee725175a74c4cb7",
+    "fromAccountId": null,
+    "toAccountId": "679c8e60dc490729c7915e48",
+    "transactionAmount": 300,
+    "accountId": "679c8bd9dc490729c7915e43",
+    "transactionType": "TRANSFER_FROM",
+    "created": "2025-01-31T01:08:45.232"
+  }
+]
+
+------------------------------------------------------------
+
+// Event driven (Using Rabbit MQ)
+
+(Transfer request is created and put in OPEN status)
+
+--> Transer balance asynchronously from "679c8e60dc490729c7915e48" to "679c8bd9dc490729c7915e43"
+
+curl -X 'POST' \
+  'http://localhost:8080/api/transfers/transferEvent' \
+  -H 'accept: application/hal+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "transferId": "string",
+  "fromAccountId": "679c8e60dc490729c7915e48",
+  "toAccountId": "679c8bd9dc490729c7915e43",
+  "transactionAmount": 300
+}'
+
+{
+  "id": "679c95f1946e9b35fcbb1591",
+  "fromAccountId": "679c8e60dc490729c7915e48",
+  "toAccountId": "679c8bd9dc490729c7915e43",
+  "transactionAmount": 300,
+  "transactionIds": null,
+  "transferStatus": "OPEN",
+  "created": "2025-01-31T01:20:47.9979766"
+}
+
+// Pushed the message into queue
+// Periodically we can check the status of the Transfer
+
+curl -X 'GET' \
+  'http://localhost:8080/api/transfers/679c95f1946e9b35fcbb1591' \
+  -H 'accept: application/hal+json'
+  
+  {
+  "id": "679c95f1946e9b35fcbb1591",
+  "fromAccountId": "679c8e60dc490729c7915e48",
+  "toAccountId": "679c8bd9dc490729c7915e43",
+  "transactionAmount": 300,
+  "transactionIds": null,
+  "transferStatus": "PROCESSING",
+  "created": "2025-01-31T01:23:18.529"
+}
+
+--> Processign is complete
+
+curl -X 'GET' \
+  'http://localhost:8080/api/transfers/679c95f1946e9b35fcbb1591' \
+  -H 'accept: application/hal+json'
+  
+  {
+  "id": "679c95f1946e9b35fcbb1591",
+  "fromAccountId": "679c8e60dc490729c7915e48",
+  "toAccountId": "679c8bd9dc490729c7915e43",
+  "transactionAmount": 300,
+  "transactionIds": [
+    "679c96b5946e9b35fcbb1592",
+    "679c96b5946e9b35fcbb1593"
+  ],
+  "transferStatus": "COMPLETED",
+  "created": "2025-01-31T01:24:05.952"
+}
+
+
+--> Check all the transaction history of the account
+
+curl -X 'GET' \
+  'http://localhost:8080/api/transactions/account/679c8e60dc490729c7915e48' \
+  -H 'accept: application/hal+json'
+  
+  [
+  {
+    "id": "679c8e60dc490729c7915e49",
+    "fromAccountId": null,
+    "toAccountId": null,
+    "transactionAmount": 1000,
+    "accountId": "679c8e60dc490729c7915e48",
+    "transactionType": "INITIAL_DEPOSIT",
+    "created": "2025-01-31T00:48:32.928"
+  },
+  {
+    "id": "679c931dee725175a74c4cb8",
+    "fromAccountId": "679c8bd9dc490729c7915e43",
+    "toAccountId": null,
+    "transactionAmount": 300,
+    "accountId": "679c8e60dc490729c7915e48",
+    "transactionType": "TRANSFER_TO",
+    "created": "2025-01-31T01:08:45.232"
+  },
+  {
+    "id": "679c9511ee725175a74c4cba",
+    "fromAccountId": "679c8bd9dc490729c7915e43",
+    "toAccountId": null,
+    "transactionAmount": 200,
+    "accountId": "679c8e60dc490729c7915e48",
+    "transactionType": "TRANSFER_TO",
+    "created": "2025-01-31T01:17:05.936"
+  },
+  {
+    "id": "679c958c946e9b35fcbb1590",
+    "fromAccountId": "679c8bd9dc490729c7915e43",
+    "toAccountId": null,
+    "transactionAmount": 200,
+    "accountId": "679c8e60dc490729c7915e48",
+    "transactionType": "TRANSFER_TO",
+    "created": "2025-01-31T01:19:08.069"
+  },
+  {
+    "id": "679c96b5946e9b35fcbb1592",
+    "fromAccountId": null,
+    "toAccountId": "679c8bd9dc490729c7915e43",
+    "transactionAmount": 300,
+    "accountId": "679c8e60dc490729c7915e48",
+    "transactionType": "TRANSFER_FROM",
+    "created": "2025-01-31T01:24:05.932"
+  }
+]
+
+curl -X 'GET' \
+  'http://localhost:8080/api/accounts/679c8e60dc490729c7915e48' \
+  -H 'accept: application/hal+json'
+  
+  {
+  "id": "679c8e60dc490729c7915e48",
+  "accountBalance": 1400,
+  "dateDeposited": "2025-01-31T00:48:32.928",
+  "customer": {
+    "id": "679c8e60dc490729c7915e47",
+    "givenName": "Branden",
+    "familyName": "Gibson",
+    "emailAddress": "brandengibson@gmail.com",
+    "created": "2025-01-31T00:48:32.919",
+    "lastUpdated": "2025-01-31T00:48:32.919"
+  },
+  "lastUpdated": "2025-01-31T01:24:05.932"
+}
+
+
+
+
+  
+
+
+

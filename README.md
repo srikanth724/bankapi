@@ -34,3 +34,7 @@ You are expected to design any other required models and routes for your API.
 - Maintainability: is it written in a clean, maintainable way? yes
 - Testing: is the system adequately tested? Unit and Integration cases are pending
 - Documentation: is the API well-documented
+## How to setup the components
+MongoDB and Rabbit MQ are required to test all the components
+mvn build tool is needed to build the application
+mvn clean package
